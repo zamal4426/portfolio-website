@@ -15,8 +15,8 @@ const Loading = ({ percent }: { percent: number }) => {
       setLoaded(true);
       setTimeout(() => {
         setIsLoaded(true);
-      }, 1000);
-    }, 600);
+      }, 1200);
+    }, 50);
   }
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const Loading = ({ percent }: { percent: number }) => {
             module.initialFX();
           }
           setIsLoading(false);
-        }, 900);
+        }, 100);
       }
     });
   }, [isLoaded]);
@@ -45,9 +45,6 @@ const Loading = ({ percent }: { percent: number }) => {
   return (
     <>
       <div className="loading-header">
-        <a href="/#" className="loader-title" data-cursor="disable">
-          RC
-        </a>
         <div className={`loaderGame ${clicked && "loader-out"}`}>
           <div className="loaderGame-container">
             <div className="loaderGame-in">
@@ -62,8 +59,8 @@ const Loading = ({ percent }: { percent: number }) => {
       <div className="loading-screen">
         <div className="loading-marquee">
           <Marquee>
-            <span> Full Stack Developer</span> <span>Software Engineer</span>
-            <span> Full Stack Developer</span> <span>Software Engineer</span>
+            <span> Frontend Developer</span> <span>Creative Coder</span>
+            <span> Frontend Developer</span> <span>Creative Coder</span>
           </Marquee>
         </div>
         <div
@@ -97,20 +94,20 @@ export const setProgress = (setLoading: (value: number) => void) => {
 
   let interval = setInterval(() => {
     if (percent <= 50) {
-      let rand = Math.round(Math.random() * 5);
+      let rand = Math.round(Math.random() * 15) + 10;
       percent = percent + rand;
-      setLoading(percent);
+      setLoading(Math.min(percent, 100));
     } else {
       clearInterval(interval);
       interval = setInterval(() => {
-        percent = percent + Math.round(Math.random());
-        setLoading(percent);
+        percent = percent + Math.round(Math.random() * 8) + 5;
+        setLoading(Math.min(percent, 100));
         if (percent > 91) {
           clearInterval(interval);
         }
-      }, 2000);
+      }, 80);
     }
-  }, 100);
+  }, 30);
 
   function clear() {
     clearInterval(interval);

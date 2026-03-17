@@ -5,33 +5,33 @@ import { MdArrowBack, MdArrowForward } from "react-icons/md";
 
 const projects = [
   {
-    title: "Solid Starters",
-    category: "Low-Code Platform",
-    tools: "Angular, Next.js, NestJS, MongoDB",
+    title: "ShopEase",
+    category: "E-Commerce Website",
+    tools: "React.js, Tailwind CSS, Firebase",
     image: "/images/Solidx.png",
   },
   {
-    title: "Radix",
-    category: "E-Commerce",
-    tools: "Angular, Next.js, NestJS, CMS",
+    title: "WeatherNow",
+    category: "Weather App",
+    tools: "React.js, OpenWeather API, CSS3",
     image: "/images/radix.png",
   },
   {
-    title: "Bond Cancellation",
-    category: "Import-Export Automation",
-    tools: "Angular, Next.js, NestJS, Workflows",
+    title: "TaskFlow",
+    category: "Task Management App",
+    tools: "Next.js, TypeScript, MongoDB",
     image: "/images/bond.png",
   },
   {
-    title: "Sapphire",
-    category: "CRM Platform",
-    tools: "AngularJS, NestJS, PostgreSQL",
+    title: "DevFolio",
+    category: "Portfolio Website",
+    tools: "React.js, GSAP, Three.js",
     image: "/images/sapphire.png",
   },
   {
-    title: "Mpro",
-    category: "Insurance Platform",
-    tools: "React.js, Node.js, Microservices",
+    title: "ChatHub",
+    category: "Real-time Chat App",
+    tools: "React.js, Socket.io, Node.js",
     image: "/images/Maxlife.png",
   },
 ];
