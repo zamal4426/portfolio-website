@@ -28,6 +28,22 @@ const Contact = () => {
               Github <MdArrowOutward />
             </a>
             <a
+              href="https://linkedin.com/in/md-zamaluddin"
+              target="_blank"
+              data-cursor="disable"
+              className="contact-social"
+            >
+              LinkedIn <MdArrowOutward />
+            </a>
+            <a
+              href="https://wa.me/8801921277460"
+              target="_blank"
+              data-cursor="disable"
+              className="contact-social"
+            >
+              WhatsApp <MdArrowOutward />
+            </a>
+            <a
               href="https://www.instagram.com/peacely_1/"
               target="_blank"
               data-cursor="disable"

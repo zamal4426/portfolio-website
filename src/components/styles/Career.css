@@ -239,6 +239,6 @@
 
     align-items: start;
     place-items: inherit;
-    justify-content: left;
+    justify-content: flex-start;
   }
 }

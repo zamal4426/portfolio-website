@@ -1,0 +1,499 @@
+/* ── Hide portfolio scroll when resume is open ── */
+body.resume-open,
+body.resume-open #smooth-wrapper,
+body.resume-open #smooth-content {
+  overflow: hidden !important;
+}
+
+/* ── Custom Cursor (same as main portfolio) ── */
+.resume-cursor {
+  --size: 0px;
+  position: fixed;
+  top: calc(var(--size) / -2);
+  left: calc(var(--size) / -2);
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50px;
+  pointer-events: none;
+  z-index: 101;
+  background-color: #e6c3ff;
+  box-shadow: 0px 0px 30px 0px rgb(175, 131, 255);
+  mix-blend-mode: difference;
+  will-change: transform;
+}
+
+@media only screen and (min-width: 600px) {
+  .resume-cursor {
+    --size: 50px;
+  }
+}
+
+/* ── Resume Page (fixed overlay on top of portfolio) ── */
+.resume-page {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: var(--backgroundColor);
+  color: #eae5ec;
+  padding: 40px 20px 80px;
+  scroll-behavior: smooth;
+}
+
+/* ── Smooth thin scrollbar ── */
+.resume-page::-webkit-scrollbar {
+  width: 5px;
+}
+
+.resume-page::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.resume-page::-webkit-scrollbar-thumb {
+  background: rgba(179, 136, 255, 0.2);
+  border-radius: 10px;
+}
+
+.resume-page::-webkit-scrollbar-thumb:hover {
+  background: rgba(179, 136, 255, 0.4);
+}
+
+.resume-page {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(179, 136, 255, 0.2) transparent;
+}
+
+/* ── Action Buttons ── */
+.resume-actions {
+  max-width: 720px;
+  margin: 0 auto 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.action-group {
+  display: flex;
+  gap: 10px;
+}
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: 1px solid rgba(179, 136, 255, 0.25);
+  border-radius: 8px;
+  background: rgba(179, 136, 255, 0.06);
+  color: #eae5ec;
+  font-family: "Geist", sans-serif;
+  font-size: 14px;
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+}
+
+.action-btn:hover {
+  background: rgba(179, 136, 255, 0.15);
+  border-color: var(--accentColor);
+  color: var(--accentColor);
+  transform: translateY(-1px);
+}
+
+.action-btn:active {
+  transform: translateY(0);
+}
+
+.action-btn svg {
+  font-size: 16px;
+}
+
+.share-btn[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 10px;
+  background: var(--accentColor);
+  color: var(--backgroundColor);
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  animation: tooltipPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes tooltipPop {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(6px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+/* ── Resume Container ── */
+.resume-container {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* ── Header ── */
+.resume-header {
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.resume-name {
+  font-size: 42px;
+  font-weight: 700;
+  letter-spacing: 8px;
+  color: #fff;
+  margin: 0 0 4px;
+  text-transform: uppercase;
+}
+
+.resume-title {
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 4px;
+  color: var(--accentColor);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* ── Divider ── */
+.resume-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(179, 136, 255, 0.3),
+    transparent
+  );
+  margin: 28px 0;
+}
+
+/* ── Sections ── */
+.section-heading {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--accentColor);
+  margin: 0 0 16px;
+}
+
+/* ── Contact ── */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.contact-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: rgba(179, 136, 255, 0.04);
+  border: 1px solid rgba(179, 136, 255, 0.08);
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  text-decoration: none;
+}
+
+.contact-item:hover {
+  background: rgba(179, 136, 255, 0.1);
+  border-color: rgba(179, 136, 255, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(179, 136, 255, 0.08);
+}
+
+.contact-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(234, 229, 236, 0.4);
+}
+
+.contact-value {
+  font-size: 14px;
+  color: #eae5ec;
+}
+
+/* ── About ── */
+.about-text {
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(234, 229, 236, 0.8);
+  margin: 0;
+}
+
+/* ── Skills ── */
+.skills-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skill-category {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+}
+
+.skill-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(234, 229, 236, 0.5);
+  min-width: 80px;
+  flex-shrink: 0;
+}
+
+.skill-tags {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(234, 229, 236, 0.85);
+}
+
+/* ── Projects ── */
+.projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.project-item {
+  padding: 14px 18px;
+  border-radius: 8px;
+  background: rgba(179, 136, 255, 0.03);
+  border: 1px solid rgba(179, 136, 255, 0.08);
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.project-item:hover {
+  background: rgba(179, 136, 255, 0.07);
+  border-color: rgba(179, 136, 255, 0.22);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(179, 136, 255, 0.06);
+}
+
+.project-header {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.project-number {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accentColor);
+  font-variant-numeric: tabular-nums;
+}
+
+.project-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.project-dash {
+  color: rgba(234, 229, 236, 0.25);
+}
+
+.project-desc {
+  font-size: 14px;
+  color: rgba(234, 229, 236, 0.65);
+}
+
+.project-tech {
+  font-size: 13px;
+  color: rgba(179, 136, 255, 0.6);
+  margin: 8px 0 0;
+  line-height: 1.5;
+}
+
+/* ── Education ── */
+.education-item {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.education-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.education-separator {
+  color: rgba(234, 229, 236, 0.2);
+}
+
+.education-detail {
+  font-size: 14px;
+  color: rgba(234, 229, 236, 0.65);
+}
+
+/* ── Mobile ── */
+@media only screen and (max-width: 600px) {
+  .resume-page {
+    padding: 24px 16px 60px;
+  }
+
+  .resume-name {
+    font-size: 28px;
+    letter-spacing: 5px;
+  }
+
+  .resume-title {
+    font-size: 13px;
+    letter-spacing: 3px;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .skill-category {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .skill-label {
+    min-width: unset;
+  }
+
+  .project-header {
+    gap: 6px;
+  }
+
+  .education-item {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .education-separator {
+    display: none;
+  }
+
+  .action-btn span {
+    display: none;
+  }
+
+  .action-btn {
+    padding: 10px;
+  }
+}
+
+/* ── Print Styles ── */
+@media print {
+  .no-print,
+  .resume-cursor {
+    display: none !important;
+  }
+
+  .resume-page {
+    position: static;
+    overflow: visible;
+    background: #fff;
+    color: #1a1a1a;
+    padding: 0;
+  }
+
+  .resume-container {
+    max-width: 100%;
+  }
+
+  .resume-name {
+    color: #1a1a1a;
+    font-size: 32px;
+  }
+
+  .resume-title {
+    color: #555;
+  }
+
+  .section-heading {
+    color: #333;
+  }
+
+  .resume-divider {
+    background: #ddd;
+    margin: 16px 0;
+  }
+
+  .contact-item {
+    background: none;
+    border: 1px solid #eee;
+    padding: 6px 10px;
+  }
+
+  .contact-label {
+    color: #888;
+  }
+
+  .contact-value {
+    color: #1a1a1a;
+  }
+
+  .about-text {
+    color: #333;
+  }
+
+  .skill-label {
+    color: #666;
+  }
+
+  .skill-tags {
+    color: #333;
+  }
+
+  .project-item {
+    background: none;
+    border: 1px solid #eee;
+    padding: 10px 14px;
+  }
+
+  .project-item:hover {
+    background: none;
+  }
+
+  .project-number {
+    color: #555;
+  }
+
+  .project-name {
+    color: #1a1a1a;
+  }
+
+  .project-dash {
+    color: #ccc;
+  }
+
+  .project-desc {
+    color: #555;
+  }
+
+  .project-tech {
+    color: #777;
+  }
+
+  .education-title {
+    color: #1a1a1a;
+  }
+
+  .education-detail {
+    color: #555;
+  }
+
+  .resume-animate {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

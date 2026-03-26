@@ -18,39 +18,26 @@ const Career = () => {
                 <h4>Self-taught Developer</h4>
                 <h5>Learning Journey</h5>
               </div>
-              <h3>2024</h3>
-            </div>
-            <p>
-              Started learning web development from scratch. Mastered HTML, CSS,
-              and JavaScript fundamentals through self-study and online resources.
-            </p>
-          </div>
-          <div className="career-info-box">
-            <div className="career-info-in">
-              <div className="career-role">
-                <h4>Frontend Developer</h4>
-                <h5>Freelance Projects</h5>
-              </div>
               <h3>2025</h3>
             </div>
             <p>
-              Built multiple responsive websites and web applications using
-              React.js and modern CSS. Delivered projects for clients with
-              clean UI/UX and pixel-perfect designs.
+              Started learning web and mobile development from scratch. Picked up
+              HTML, CSS, JavaScript, React.js, and Flutter through self-study
+              and building real projects.
             </p>
           </div>
           <div className="career-info-box">
             <div className="career-info-in">
               <div className="career-role">
-                <h4>Frontend Developer</h4>
-                <h5>Open to Opportunities</h5>
+                <h4>Building Projects</h4>
+                <h5>Learning by Doing</h5>
               </div>
               <h3>NOW</h3>
             </div>
             <p>
-              Expanding skills with Next.js, TypeScript, and Tailwind CSS.
-              Building personal projects and contributing to open-source.
-              Actively looking for exciting frontend roles.
+              Actively building web and mobile apps using React.js, Next.js,
+              TypeScript, and Flutter. Learning new technologies every day and
+              turning ideas into real-world projects.
             </p>
           </div>
         </div>
