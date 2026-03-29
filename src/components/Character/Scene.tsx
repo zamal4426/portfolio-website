@@ -77,6 +77,9 @@ const Scene = () => {
       });
       resizeHandler = () => handleResize(renderer, camera, canvasDiv, character);
       window.addEventListener("resize", resizeHandler);
+    }).catch((err) => {
+      console.error("Character load failed:", err);
+      progress.clear();
     });
 
     let mouse = { x: 0, y: 0 },
