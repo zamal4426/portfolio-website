@@ -14,10 +14,15 @@ const WorkImage = (props: Props) => {
   const handleMouseEnter = async () => {
     if (props.video) {
       setIsVideo(true);
-      const response = await fetch(`src/assets/${props.video}`);
-      const blob = await response.blob();
-      const blobUrl = URL.createObjectURL(blob);
-      setVideo(blobUrl);
+      try {
+        const response = await fetch(`src/assets/${props.video}`);
+        const blob = await response.blob();
+        if (video) URL.revokeObjectURL(video);
+        const blobUrl = URL.createObjectURL(blob);
+        setVideo(blobUrl);
+      } catch {
+        setIsVideo(false);
+      }
     }
   };
 
@@ -29,6 +34,7 @@ const WorkImage = (props: Props) => {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={() => setIsVideo(false)}
         target="_blank"
+        rel="noopener noreferrer"
         data-cursor={"disable"}
       >
         {props.link && (
@@ -36,7 +42,7 @@ const WorkImage = (props: Props) => {
             <MdArrowOutward />
           </div>
         )}
-        <img src={props.image} alt={props.alt} />
+        <img src={props.image} alt={props.alt || ""} />
         {isVideo && <video src={video} autoPlay muted playsInline loop></video>}
       </a>
     </div>

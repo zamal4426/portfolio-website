@@ -17,13 +17,8 @@
   z-index: 999;
   padding: 10px;
 }
-.social-icons:hover {
-  transition: 0.3s;
-  color: var(--backgroundColor);
-}
 .social-icons a:hover {
-  color: var(--backgroundColor);
-  /* transform: scale(1.2); */
+  color: var(--accentColor);
 }
 .social-icons span {
   width: 50px;
@@ -74,12 +69,12 @@ div.resume-button span {
 }
 .check-line {
   position: fixed;
-  top: 655px;
+  top: calc(100vh - 80px);
   left: 0;
   height: 1px;
   background-color: #ffffff;
   width: 100%;
-  z-index: 99999;
+  z-index: 50;
 }
 @media only screen and (min-width: 900px) {
   .social-icons {

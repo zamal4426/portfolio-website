@@ -14,16 +14,16 @@ const App = () => {
   return (
     <>
       <LoadingProvider>
-        <Suspense>
+        <Suspense fallback={null}>
           <MainContainer>
-            <Suspense>
+            <Suspense fallback={null}>
               <CharacterModel />
             </Suspense>
           </MainContainer>
         </Suspense>
       </LoadingProvider>
       {isResume && (
-        <Suspense>
+        <Suspense fallback={null}>
           <Resume />
         </Suspense>
       )}

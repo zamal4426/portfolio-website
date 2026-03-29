@@ -135,20 +135,31 @@ const TechStack = () => {
         .getBoundingClientRect().top;
       setIsActive(scrollY > threshold);
     };
+    let activeInterval: ReturnType<typeof setInterval> | null = null;
+    const clickHandlers: Array<[HTMLElement, () => void]> = [];
+
     document.querySelectorAll(".header a").forEach((elem) => {
       const element = elem as HTMLAnchorElement;
-      element.addEventListener("click", () => {
-        const interval = setInterval(() => {
+      const handler = () => {
+        if (activeInterval) clearInterval(activeInterval);
+        activeInterval = setInterval(() => {
           handleScroll();
-        }, 10);
+        }, 150);
         setTimeout(() => {
-          clearInterval(interval);
+          if (activeInterval) {
+            clearInterval(activeInterval);
+            activeInterval = null;
+          }
         }, 1000);
-      });
+      };
+      element.addEventListener("click", handler);
+      clickHandlers.push([element, handler]);
     });
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      clickHandlers.forEach(([el, fn]) => el.removeEventListener("click", fn));
+      if (activeInterval) clearInterval(activeInterval);
     };
   }, []);
   const materials = useMemo(() => {

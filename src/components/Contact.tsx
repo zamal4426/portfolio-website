@@ -22,6 +22,7 @@ const Contact = () => {
             <a
               href="https://github.com/zamal4426"
               target="_blank"
+              rel="noopener noreferrer"
               data-cursor="disable"
               className="contact-social"
             >
@@ -30,6 +31,7 @@ const Contact = () => {
             <a
               href="https://linkedin.com/in/md-zamaluddin"
               target="_blank"
+              rel="noopener noreferrer"
               data-cursor="disable"
               className="contact-social"
             >
@@ -38,6 +40,7 @@ const Contact = () => {
             <a
               href="https://wa.me/8801921277460"
               target="_blank"
+              rel="noopener noreferrer"
               data-cursor="disable"
               className="contact-social"
             >
@@ -46,6 +49,7 @@ const Contact = () => {
             <a
               href="https://www.instagram.com/peacely_1/"
               target="_blank"
+              rel="noopener noreferrer"
               data-cursor="disable"
               className="contact-social"
             >

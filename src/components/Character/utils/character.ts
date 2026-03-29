@@ -18,7 +18,7 @@ const setCharacter = (
       try {
         const encryptedBlob = await decryptFile(
           "/models/character.enc?v=2",
-          "MyCharacter12"
+          import.meta.env.VITE_CHAR_KEY
         );
         const blobUrl = URL.createObjectURL(new Blob([encryptedBlob]));
 
@@ -28,8 +28,8 @@ const setCharacter = (
           async (gltf) => {
             character = gltf.scene;
             await renderer.compileAsync(character, camera, scene);
-            character.traverse((child: any) => {
-              if (child.isMesh) {
+            character.traverse((child) => {
+              if ((child as THREE.Mesh).isMesh) {
                 const mesh = child as THREE.Mesh;
 
                 // Change clothing colors to match site theme
@@ -62,13 +62,11 @@ const setCharacter = (
           },
           undefined,
           (error) => {
-            console.error("Error loading GLTF model:", error);
             reject(error);
           }
         );
       } catch (err) {
         reject(err);
-        console.error(err);
       }
     });
   };

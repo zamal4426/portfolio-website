@@ -2,34 +2,41 @@ import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoArrowBack } from "react-icons/io5";
 import { FiDownload, FiShare2 } from "react-icons/fi";
+import { MdArrowOutward } from "react-icons/md";
 import gsap from "gsap";
 import "./styles/Resume.css";
 
 const Resume = () => {
   const navigate = useNavigate();
   const pageRef = useRef<HTMLDivElement>(null);
-  const cursorRef = useRef<HTMLDivElement>(null);
+  const glowRef = useRef<HTMLDivElement>(null);
 
-  // Mouse cursor animation
   useEffect(() => {
-    const cursor = cursorRef.current;
+    document.body.classList.add("resume-open");
+    return () => {
+      document.body.classList.remove("resume-open");
+    };
+  }, []);
+
+  // Cursor — same lerp as main page (only RAF running on this page)
+  useEffect(() => {
+    const cursor = glowRef.current;
     if (!cursor) return;
 
-    const mousePos = { x: 0, y: 0 };
-    const cursorPos = { x: 0, y: 0 };
+    const mouse = { x: 0, y: 0 };
+    const pos = { x: 0, y: 0 };
 
     const onMouseMove = (e: MouseEvent) => {
-      mousePos.x = e.clientX;
-      mousePos.y = e.clientY;
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
     };
-
     document.addEventListener("mousemove", onMouseMove);
 
     let rafId: number;
     const loop = () => {
-      cursorPos.x += (mousePos.x - cursorPos.x) / 6;
-      cursorPos.y += (mousePos.y - cursorPos.y) / 6;
-      cursor.style.transform = `translate(${cursorPos.x}px, ${cursorPos.y}px)`;
+      pos.x += (mouse.x - pos.x) / 6;
+      pos.y += (mouse.y - pos.y) / 6;
+      cursor.style.transform = `translate3d(${pos.x}px,${pos.y}px,0)`;
       rafId = requestAnimationFrame(loop);
     };
     rafId = requestAnimationFrame(loop);
@@ -40,45 +47,37 @@ const Resume = () => {
     };
   }, []);
 
-  // Hide portfolio scroll behind overlay
-  useEffect(() => {
-    document.body.classList.add("resume-open");
-    return () => {
-      document.body.classList.remove("resume-open");
-    };
-  }, []);
-
-  // Scroll-reveal animations
+  // Scroll-reveal animations (IntersectionObserver — zero lag)
   useEffect(() => {
     const page = pageRef.current;
     if (!page) return;
 
     const sections = page.querySelectorAll(".resume-animate");
-    const revealed = new Set<number>();
+    let count = 0;
 
-    sections.forEach((s) => gsap.set(s, { opacity: 0, y: 30 }));
+    sections.forEach((s) => gsap.set(s, { opacity: 0, y: 24 }));
 
-    const reveal = () => {
-      const threshold = page.scrollTop + page.clientHeight - 30;
-      sections.forEach((section, i) => {
-        if (revealed.has(i)) return;
-        if ((section as HTMLElement).offsetTop < threshold) {
-          revealed.add(i);
-          gsap.to(section, {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          observer.unobserve(entry.target);
+          count++;
+          gsap.to(entry.target, {
             opacity: 1,
             y: 0,
-            duration: 0.8,
-            ease: "power3.out",
-            delay: revealed.size <= 5 ? i * 0.08 : 0,
+            duration: 0.6,
+            ease: "power2.out",
+            delay: count <= 4 ? count * 0.06 : 0,
           });
-        }
-      });
-    };
+        });
+      },
+      { root: page, threshold: 0.1 }
+    );
 
-    page.addEventListener("scroll", reveal);
-    requestAnimationFrame(reveal);
+    sections.forEach((s) => observer.observe(s));
 
-    return () => page.removeEventListener("scroll", reveal);
+    return () => observer.disconnect();
   }, []);
 
   const handleDownload = () => {
@@ -108,231 +107,189 @@ const Resume = () => {
   };
 
   return (
+    <>
+    <div className="resume-glow no-print" ref={glowRef} />
     <div className="resume-page" ref={pageRef}>
-      <div className="resume-cursor" ref={cursorRef} />
-      <div className="resume-actions no-print resume-animate">
-        <button className="action-btn back-btn" onClick={() => navigate("/")}>
-          <IoArrowBack />
-          <span>Back</span>
+
+      {/* Top bar */}
+      <header className="resume-topbar no-print resume-animate">
+        <button className="resume-back" onClick={() => navigate("/")}>
+          <IoArrowBack /> Back
         </button>
-        <div className="action-group">
-          <button className="action-btn download-btn" onClick={handleDownload}>
+        <div className="resume-topbar-actions">
+          <button className="resume-action-btn" onClick={handleDownload}>
             <FiDownload />
-            <span>Download</span>
           </button>
-          <button className="action-btn share-btn" onClick={handleShare}>
+          <button
+            className="resume-action-btn share-btn"
+            onClick={handleShare}
+          >
             <FiShare2 />
-            <span>Share</span>
           </button>
         </div>
-      </div>
+      </header>
 
-      <div className="resume-container">
-        <header className="resume-header resume-animate">
-          <h1 className="resume-name">MD ZAMAL</h1>
-          <p className="resume-title">Frontend Developer</p>
-        </header>
-
-        <div className="resume-divider resume-animate" />
-
-        <section className="resume-section resume-animate">
-          <h2 className="section-heading">Contact</h2>
-          <div className="contact-grid">
-            <a href="mailto:zamal4426@gmail.com" className="contact-item">
-              <span className="contact-label">Email</span>
-              <span className="contact-value">zamal4426@gmail.com</span>
-            </a>
+      <div className="resume-paper">
+        {/* Header */}
+        <div className="resume-header resume-animate">
+          <div className="resume-header-left">
+            <h1 className="resume-name">
+              MD<span>ZAMAL</span>
+            </h1>
+            <p className="resume-role">Frontend Developer</p>
+          </div>
+          <div className="resume-header-right">
+            <a href="mailto:zamal4426@gmail.com">zamal4426@gmail.com</a>
             <a
               href="https://github.com/zamal4426"
               target="_blank"
               rel="noopener noreferrer"
-              className="contact-item"
             >
-              <span className="contact-label">GitHub</span>
-              <span className="contact-value">github.com/zamal4426</span>
+              github.com/zamal4426 <MdArrowOutward />
             </a>
             <a
               href="https://linkedin.com/in/md-zamaluddin"
               target="_blank"
               rel="noopener noreferrer"
-              className="contact-item"
             >
-              <span className="contact-label">LinkedIn</span>
-              <span className="contact-value">linkedin.com/in/md-zamaluddin</span>
+              linkedin.com/in/md-zamaluddin <MdArrowOutward />
             </a>
             <a
               href="https://wa.me/8801921277460"
               target="_blank"
               rel="noopener noreferrer"
-              className="contact-item"
             >
-              <span className="contact-label">WhatsApp</span>
-              <span className="contact-value">+8801921277460</span>
+              +880 1921 277460
             </a>
           </div>
-        </section>
+        </div>
 
-        <div className="resume-divider resume-animate" />
+        <div className="resume-divider" />
 
-        <section className="resume-section resume-animate">
-          <h2 className="section-heading">About</h2>
-          <p className="about-text">
+        {/* Summary */}
+        <section className="resume-sect resume-animate">
+          <h2 className="resume-sect-title">Summary</h2>
+          <p className="resume-summary">
             I build polished, high-performance web and mobile experiences with
-            React.js, Next.js, TypeScript, and Flutter. From AI-powered platforms
-            to wellness apps, every project I ship is crafted with sharp attention
-            to detail and a drive to solve real problems. Self-taught, constantly
-            shipping, and always raising the bar.
+            React.js, Next.js, TypeScript, and Flutter. From AI-powered
+            platforms to wellness apps, every project I ship is crafted with
+            sharp attention to detail and a drive to solve real problems.
+            Self-taught, constantly shipping, and always raising the bar.
           </p>
         </section>
 
-        <div className="resume-divider resume-animate" />
+        <div className="resume-divider" />
 
-        <section className="resume-section resume-animate">
-          <h2 className="section-heading">Skills</h2>
-          <div className="skills-grid">
-            <div className="skill-category">
-              <span className="skill-label">Frontend</span>
-              <span className="skill-tags">
-                React.js, Next.js, TypeScript, JavaScript, Tailwind CSS, HTML5,
-                CSS3, GSAP
-              </span>
+        {/* Skills */}
+        <section className="resume-sect resume-animate">
+          <h2 className="resume-sect-title">Technical Skills</h2>
+          <div className="resume-skill-grid">
+            <div className="resume-skill-group">
+              <h3>Frontend</h3>
+              <p>React.js, Next.js, TypeScript, JavaScript, Tailwind CSS, HTML5, CSS3, GSAP</p>
             </div>
-            <div className="skill-category">
-              <span className="skill-label">Mobile</span>
-              <span className="skill-tags">Flutter, Dart</span>
+            <div className="resume-skill-group">
+              <h3>Mobile</h3>
+              <p>Flutter, Dart</p>
             </div>
-            <div className="skill-category">
-              <span className="skill-label">Backend</span>
-              <span className="skill-tags">Node.js, Express.js</span>
+            <div className="resume-skill-group">
+              <h3>Backend</h3>
+              <p>Node.js, Express.js</p>
             </div>
-            <div className="skill-category">
-              <span className="skill-label">Database</span>
-              <span className="skill-tags">
-                PostgreSQL, MongoDB, MySQL, SQLite, Firebase
-              </span>
+            <div className="resume-skill-group">
+              <h3>Database</h3>
+              <p>PostgreSQL, MongoDB, MySQL, SQLite, Firebase</p>
             </div>
-            <div className="skill-category">
-              <span className="skill-label">Tools</span>
-              <span className="skill-tags">
-                Git & GitHub, VS Code, Figma, Vercel, REST APIs
-              </span>
+            <div className="resume-skill-group">
+              <h3>Tools</h3>
+              <p>Git & GitHub, VS Code, Figma, Vercel, REST APIs</p>
             </div>
           </div>
         </section>
 
-        <div className="resume-divider resume-animate" />
+        <div className="resume-divider" />
 
-        <section className="resume-section resume-animate">
-          <h2 className="section-heading">Projects</h2>
-          <div className="projects-list">
-            <div className="project-item">
-              <div className="project-header">
-                <span className="project-number">01</span>
-                <span className="project-name">Resufy</span>
-                <span className="project-dash">&mdash;</span>
-                <span className="project-desc">AI-Powered Job Search Platform</span>
+        {/* Projects */}
+        <section className="resume-sect resume-animate">
+          <h2 className="resume-sect-title">Projects</h2>
+          <div className="resume-project-list">
+            {[
+              {
+                name: "Resufy",
+                desc: "AI-Powered Job Search Platform",
+                tech: "Next.js, React, TypeScript, Tailwind CSS, PostgreSQL, Claude AI, Stripe",
+              },
+              {
+                name: "Kortex",
+                desc: "AI Agent Orchestration Platform",
+                tech: "Node.js, React, TypeScript, Tailwind CSS, WebSocket, SQLite",
+              },
+              {
+                name: "LifeControl",
+                desc: "AI Personal Life Assistant",
+                tech: "Flutter, Dart, Firebase, Google Sign-In, Provider, FL Chart",
+              },
+              {
+                name: "StreakUp",
+                desc: "Habit Tracking App",
+                tech: "Flutter, Dart, Firebase, Material Design 3",
+              },
+              {
+                name: "MoodMate",
+                desc: "AI Mood Companion App",
+                tech: "Flutter, Dart, Firebase, Speech-to-Text, FL Chart",
+              },
+              {
+                name: "MoodMoon",
+                desc: "Wellness & Meditation Companion",
+                tech: "Flutter, Dart, Firebase, Just Audio, TTS, In-App Purchase",
+              },
+              {
+                name: "SocialMedia Guild",
+                desc: "Community Management App",
+                tech: "Flutter, Dart, Firebase Realtime Database, Google Sign-In",
+              },
+              {
+                name: "Reflecto",
+                desc: "Self-Care & Reflection App",
+                tech: "Flutter, Dart, SharedPreferences",
+              },
+            ].map((p, i) => (
+              <div className="resume-project-card" key={i}>
+                <div className="resume-project-top">
+                  <h4>{p.name}</h4>
+                  <span className="resume-project-badge">{p.desc}</span>
+                </div>
+                <p className="resume-project-stack">{p.tech}</p>
               </div>
-              <p className="project-tech">
-                Next.js, React, TypeScript, Tailwind CSS, PostgreSQL, Claude AI,
-                Stripe
-              </p>
-            </div>
-            <div className="project-item">
-              <div className="project-header">
-                <span className="project-number">02</span>
-                <span className="project-name">Kortex</span>
-                <span className="project-dash">&mdash;</span>
-                <span className="project-desc">
-                  AI Agent Orchestration Platform
-                </span>
-              </div>
-              <p className="project-tech">
-                Node.js, React, TypeScript, Tailwind CSS, WebSocket, SQLite
-              </p>
-            </div>
-            <div className="project-item">
-              <div className="project-header">
-                <span className="project-number">03</span>
-                <span className="project-name">LifeControl</span>
-                <span className="project-dash">&mdash;</span>
-                <span className="project-desc">
-                  AI Personal Life Assistant
-                </span>
-              </div>
-              <p className="project-tech">
-                Flutter, Dart, Firebase, Google Sign-In, Provider, FL Chart
-              </p>
-            </div>
-            <div className="project-item">
-              <div className="project-header">
-                <span className="project-number">04</span>
-                <span className="project-name">StreakUp</span>
-                <span className="project-dash">&mdash;</span>
-                <span className="project-desc">Habit Tracking App</span>
-              </div>
-              <p className="project-tech">
-                Flutter, Dart, Firebase, Material Design 3
-              </p>
-            </div>
-            <div className="project-item">
-              <div className="project-header">
-                <span className="project-number">05</span>
-                <span className="project-name">MoodMate</span>
-                <span className="project-dash">&mdash;</span>
-                <span className="project-desc">AI Mood Companion App</span>
-              </div>
-              <p className="project-tech">
-                Flutter, Dart, Firebase, Speech-to-Text, FL Chart
-              </p>
-            </div>
-            <div className="project-item">
-              <div className="project-header">
-                <span className="project-number">06</span>
-                <span className="project-name">MoodMoon</span>
-                <span className="project-dash">&mdash;</span>
-                <span className="project-desc">Wellness & Meditation Companion</span>
-              </div>
-              <p className="project-tech">
-                Flutter, Dart, Firebase, Just Audio, TTS, In-App Purchase
-              </p>
-            </div>
-            <div className="project-item">
-              <div className="project-header">
-                <span className="project-number">07</span>
-                <span className="project-name">SocialMedia Guild</span>
-                <span className="project-dash">&mdash;</span>
-                <span className="project-desc">Community Management App</span>
-              </div>
-              <p className="project-tech">
-                Flutter, Dart, Firebase Realtime Database, Google Sign-In
-              </p>
-            </div>
-            <div className="project-item">
-              <div className="project-header">
-                <span className="project-number">08</span>
-                <span className="project-name">Reflecto</span>
-                <span className="project-dash">&mdash;</span>
-                <span className="project-desc">Self-Care & Reflection App</span>
-              </div>
-              <p className="project-tech">Flutter, Dart, SharedPreferences</p>
-            </div>
+            ))}
           </div>
         </section>
 
-        <div className="resume-divider resume-animate" />
+        <div className="resume-divider" />
 
-        <section className="resume-section resume-animate">
-          <h2 className="section-heading">Education</h2>
-          <div className="education-item">
-            <span className="education-title">Madrasa Education</span>
-            <span className="education-separator">|</span>
-            <span className="education-detail">
-              Self-taught Developer (2025 &ndash; Present)
-            </span>
+        {/* Education */}
+        <section className="resume-sect resume-animate">
+          <h2 className="resume-sect-title">Education</h2>
+          <div className="resume-edu-item">
+            <div className="resume-edu-info">
+              <h4>Madrasa Education</h4>
+              <p>Self-taught Developer</p>
+            </div>
+            <span className="resume-edu-date">2025 &ndash; Present</span>
           </div>
         </section>
+
+        {/* Footer accent */}
+        <div className="resume-paper-footer resume-animate">
+          <div className="resume-footer-line" />
+          <p>
+            Designed & Developed by <span>Md Zamal</span>
+          </p>
+        </div>
       </div>
     </div>
+    </>
   );
 };
 

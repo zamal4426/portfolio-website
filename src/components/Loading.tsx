@@ -10,28 +10,28 @@ const Loading = ({ percent }: { percent: number }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [clicked, setClicked] = useState(false);
 
-  if (percent >= 100) {
-    setTimeout(() => {
+  useEffect(() => {
+    if (percent < 100) return;
+    const t1 = setTimeout(() => {
       setLoaded(true);
-      setTimeout(() => {
-        setIsLoaded(true);
-      }, 1200);
+      const t2 = setTimeout(() => setIsLoaded(true), 1200);
+      return () => clearTimeout(t2);
     }, 50);
-  }
+    return () => clearTimeout(t1);
+  }, [percent]);
 
   useEffect(() => {
+    if (!isLoaded) return;
     import("./utils/initialFX").then((module) => {
-      if (isLoaded) {
-        setClicked(true);
-        setTimeout(() => {
-          if (module.initialFX) {
-            module.initialFX();
-          }
-          setIsLoading(false);
-        }, 100);
-      }
+      setClicked(true);
+      setTimeout(() => {
+        if (module.initialFX) {
+          module.initialFX();
+        }
+        setIsLoading(false);
+      }, 100);
     });
-  }, [isLoaded]);
+  }, [isLoaded, setIsLoading]);
 
   function handleMouseMove(e: React.MouseEvent<HTMLElement>) {
     const { currentTarget: target } = e;
@@ -91,32 +91,40 @@ export default Loading;
 
 export const setProgress = (setLoading: (value: number) => void) => {
   let percent: number = 0;
+  let interval: ReturnType<typeof setInterval> | null = null;
 
-  let interval = setInterval(() => {
+  const clearCurrent = () => {
+    if (interval) {
+      clearInterval(interval);
+      interval = null;
+    }
+  };
+
+  interval = setInterval(() => {
     if (percent <= 50) {
-      let rand = Math.round(Math.random() * 15) + 10;
+      const rand = Math.round(Math.random() * 15) + 10;
       percent = percent + rand;
       setLoading(Math.min(percent, 100));
     } else {
-      clearInterval(interval);
+      clearCurrent();
       interval = setInterval(() => {
         percent = percent + Math.round(Math.random() * 8) + 5;
         setLoading(Math.min(percent, 100));
         if (percent > 91) {
-          clearInterval(interval);
+          clearCurrent();
         }
       }, 80);
     }
   }, 30);
 
   function clear() {
-    clearInterval(interval);
+    clearCurrent();
     setLoading(100);
   }
 
   function loaded() {
     return new Promise<number>((resolve) => {
-      clearInterval(interval);
+      clearCurrent();
       interval = setInterval(() => {
         if (percent < 100) {
           percent++;

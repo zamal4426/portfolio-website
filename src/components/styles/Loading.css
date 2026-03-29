@@ -2,12 +2,13 @@
   position: fixed;
   width: 100vw;
   height: var(--vh);
-  /* background-image: linear-gradient(#cbb1ff, #d8c4ff); */
   background-color: #ede7f6;
-  z-index: 999999999;
+  z-index: 300;
   display: flex;
   place-items: center;
   justify-content: center;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
 .loading-button {
@@ -202,7 +203,7 @@
   width: var(--cWidth);
   max-width: var(--cMaxWidth);
   position: fixed;
-  z-index: 9999999999;
+  z-index: 301;
   display: flex;
   justify-content: space-between;
   box-sizing: border-box;
