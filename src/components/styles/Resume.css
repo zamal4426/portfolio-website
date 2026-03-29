@@ -497,7 +497,7 @@ body.resume-open #smooth-content {
     overflow: visible !important;
     height: auto !important;
     color: #000 !important;
-    font-size: 12px !important;
+    font-size: 14px !important;
   }
 
   body * { visibility: hidden; }
@@ -539,12 +539,12 @@ body.resume-open #smooth-content {
 
   /* Header */
   .resume-header {
-    padding-bottom: 10px;
+    padding-bottom: 14px;
     flex-direction: row;
     gap: 0;
   }
   .resume-name {
-    font-size: 22px;
+    font-size: 30px;
     color: #000;
     -webkit-text-fill-color: #000;
     letter-spacing: 1px;
@@ -556,54 +556,54 @@ body.resume-open #smooth-content {
   }
   .resume-role {
     color: #444;
-    font-size: 9px;
+    font-size: 12px;
     letter-spacing: 2px;
-    margin-top: 4px;
+    margin-top: 5px;
   }
   .resume-header-right {
-    padding-top: 2px;
+    padding-top: 4px;
   }
   .resume-header-right a {
-    font-size: 9.5px;
+    font-size: 12px;
     color: #333;
     gap: 0;
   }
 
   /* Sections */
   .resume-sect {
-    padding: 10px 0;
+    padding: 14px 0;
   }
   .resume-sect-title {
-    font-size: 9px;
+    font-size: 12px;
     color: #000;
     font-weight: 700;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     letter-spacing: 2px;
   }
 
   /* Summary */
   .resume-summary {
-    font-size: 10.5px;
-    line-height: 1.5;
+    font-size: 13px;
+    line-height: 1.6;
     color: #222;
     font-weight: 400;
   }
 
   /* Skills */
   .resume-skill-grid {
-    gap: 4px 24px;
+    gap: 6px 30px;
     grid-template-columns: 1fr 1fr;
   }
   .resume-skill-group h3 {
-    font-size: 8.5px;
+    font-size: 11px;
     color: #444;
-    margin-bottom: 1px;
+    margin-bottom: 2px;
     letter-spacing: 1px;
   }
   .resume-skill-group p {
-    font-size: 10px;
+    font-size: 13px;
     color: #222;
-    line-height: 1.4;
+    line-height: 1.5;
   }
 
   /* Projects */
@@ -612,19 +612,19 @@ body.resume-open #smooth-content {
     gap: 0;
   }
   .resume-project-card {
-    padding: 5px 0;
+    padding: 7px 0;
     border: none;
     border-radius: 0;
     border-bottom: 1px solid #eee !important;
     page-break-inside: avoid;
   }
   .resume-project-top h4 {
-    font-size: 10.5px;
+    font-size: 14px;
     color: #000;
     font-weight: 600;
   }
   .resume-project-badge {
-    font-size: 8px;
+    font-size: 11px;
     background: none !important;
     border: none !important;
     color: #555;
@@ -635,32 +635,32 @@ body.resume-open #smooth-content {
     content: "— ";
   }
   .resume-project-stack {
-    font-size: 9px;
+    font-size: 12px;
     color: #555;
-    margin-top: 1px;
+    margin-top: 2px;
   }
 
   /* Education */
   .resume-edu-info h4 {
-    font-size: 10.5px;
+    font-size: 14px;
     color: #000;
   }
   .resume-edu-info p {
-    font-size: 9.5px;
+    font-size: 12px;
     color: #444;
   }
   .resume-edu-date {
-    font-size: 9.5px;
+    font-size: 12px;
     color: #444;
   }
 
   /* Footer */
   .resume-paper-footer {
-    padding-top: 8px;
-    margin-top: 4px;
+    padding-top: 10px;
+    margin-top: 6px;
   }
   .resume-paper-footer p {
-    font-size: 8px;
+    font-size: 10px;
     color: #999;
   }
   .resume-paper-footer span {
@@ -678,7 +678,7 @@ body.resume-open #smooth-content {
   }
 
   @page {
-    margin: 0.5in;
+    margin: 0.6in 0.7in;
     size: letter;
   }
 }
