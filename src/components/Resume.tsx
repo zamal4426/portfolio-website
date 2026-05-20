@@ -136,7 +136,7 @@ const Resume = () => {
             <h1 className="resume-name">
               MD<span>ZAMAL</span>
             </h1>
-            <p className="resume-role">Frontend Developer</p>
+            <p className="resume-role">Mobile App Developer</p>
           </div>
           <div className="resume-header-right">
             <a href="mailto:zamal4426@gmail.com">zamal4426@gmail.com</a>
@@ -170,11 +170,11 @@ const Resume = () => {
         <section className="resume-sect resume-animate">
           <h2 className="resume-sect-title">Summary</h2>
           <p className="resume-summary">
-            I build polished, high-performance web and mobile experiences with
-            React.js, Next.js, TypeScript, and Flutter. From AI-powered
-            platforms to wellness apps, every project I ship is crafted with
-            sharp attention to detail and a drive to solve real problems.
-            Self-taught, constantly shipping, and always raising the bar.
+            I build polished, high-performance mobile applications with
+            Flutter, Dart, and Firebase. From AI-powered apps to wellness
+            companions, every project I ship is crafted with sharp attention
+            to detail and a drive to solve real problems. Self-taught,
+            constantly shipping, and always raising the bar.
           </p>
         </section>
 
@@ -185,24 +185,16 @@ const Resume = () => {
           <h2 className="resume-sect-title">Technical Skills</h2>
           <div className="resume-skill-grid">
             <div className="resume-skill-group">
-              <h3>Frontend</h3>
-              <p>React.js, Next.js, TypeScript, JavaScript, Tailwind CSS, HTML5, CSS3, GSAP</p>
-            </div>
-            <div className="resume-skill-group">
               <h3>Mobile</h3>
-              <p>Flutter, Dart</p>
+              <p>Flutter, Dart, Android SDK, iOS, Material Design 3, Provider, Riverpod</p>
             </div>
             <div className="resume-skill-group">
-              <h3>Backend</h3>
-              <p>Node.js, Express.js</p>
-            </div>
-            <div className="resume-skill-group">
-              <h3>Database</h3>
-              <p>PostgreSQL, MongoDB, MySQL, SQLite, Firebase</p>
+              <h3>Backend & Database</h3>
+              <p>Firebase, SQLite, Hive, SharedPreferences, REST APIs</p>
             </div>
             <div className="resume-skill-group">
               <h3>Tools</h3>
-              <p>Git & GitHub, VS Code, Figma, Vercel, REST APIs</p>
+              <p>Git & GitHub, VS Code, Android Studio, Figma, Google Play Console, Firebase Console</p>
             </div>
           </div>
         </section>
